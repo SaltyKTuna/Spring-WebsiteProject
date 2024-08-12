@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<!-- Bootstrap CSS -->
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
+</head>
+
+<body>
+    <div class="col-6 offset-3 mt-4">
+        <form th:action="@{/site/saveOrUpdate}" method="post" th:object="${customer}">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Register</h2>
+                </div>
+                <div class="card-body">
+                    <div class="form-group mb-3">
+                        <label for="name">Customer Name:</label>
+                        <input type="text" class="form-control" th:field="*{name}" id="name" aria-describedby="nameHID">
+                        <small id="nameHID" class="form-text text-muted">Name is required</small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Password:</label>
+                        <input type="text" class="form-control" th:field="*{password}" id="password" aria-describedby="passwordHID">
+                        <small id="passwordHID" class="form-text text-muted">Password is required</small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" th:field="*{email}" id="email" aria-describedby="emailHID">
+                        <small id="emailHID" class="form-text text-muted">Email is required</small>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="phone">Phone Numbers:</label>
+                        <input type="text" class="form-control" th:field="*{phone}" id="phone" aria-describedby="phoneHID">
+                        <small id="phoneHID" class="form-text text-muted">Phone numbers is required</small>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <a class="btn btn-secondary" th:href="@{/site/login}">Back to Login</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

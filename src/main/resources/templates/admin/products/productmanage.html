@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+</head>
+
+<body>
+
+    <section class="row" layout:fragment="content">
+        <h3 th:if="${errors != null}" class="alert alert-primary" role="alert">
+            <i th:text="${errors}"></i>
+        </h3>
+        <div class="col-6 offset-3 mt-4">
+            <form th:action="@{/admin/products/saveOrUpdate}" method="post" th:object="${product}"
+                enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Add Product</h2>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="form-group mb-3">
+                            <label for="productID">Product ID:</label>
+                            <input type="hidden" th:field="*{productID}">
+                            <input type="text" class="form-control" th:field="*{productID}" readonly
+                                aria-describedby="customer">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="name">Product Name:</label>
+                            <input type="text" class="form-control" th:field="*{name}" id="name"
+                                aria-describedby="nameHID">
+                            <small id="nameHID" class="form-text text-muted">Name is required</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="unitPrice">Price:</label>
+                            <input type="text" class="form-control" th:field="*{unitPrice}" id="unitPrice"
+                                aria-describedby="unitPriceHID">
+                            <small id="unitPriceHID" class="form-text text-muted">Price is required</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="quantity">Quantity:</label>
+                            <input type="text" class="form-control" th:field="*{quantity}" id="quantity"
+                                aria-describedby="quantityHID">
+                            <small id="quantityHID" class="form-text text-muted">Quantity is required</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="discount">Discount:</label>
+                            <input type="text" class="form-control" th:field="*{discount}" id="discount"
+                                aria-describedby="discountHID">
+                            <small id="discountHID" class="form-text text-muted">Discount is required</small>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="description">Description:</label>
+                            <input type="text" class="form-control" th:field="*{description}" id="description"
+                                aria-describedby="descriptionHID">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="imageFile">Image:</label>
+                            <input type="file" class="form-control" th:field="*{imageFile}" id="imageFile"
+                                aria-describedby="imageFileHID">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="categoryID">Category:</label>
+                            <select class="form-control" id="categoryID" th:field="*{categoryID}">
+                                <option th:each="category : ${categories}" th:value="${category.categoryID}"
+                                    th:text="${category.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="card-footer text-muted">
+                        <a class="btn btn-secondary" th:href="@{/admin/products/add}">Reset</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> <span th:if="${product.isEdit}">Update</span>
+                            <span th:unless="${product.isEdit}">Save</span>
+                        </button>
+                        <a th:href="@{/admin/products/list}" class="btn btn-success">List Products</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+</body>
+
+</html>

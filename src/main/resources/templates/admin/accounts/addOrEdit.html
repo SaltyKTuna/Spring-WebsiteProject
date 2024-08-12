@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+
+</head>
+
+<body>
+
+	<section class="row" layout:fragment="content">
+		<div class="col-6 offset-3 mt-4">
+			<form th:action="@{/admin/accounts/saveOrUpdate}" method="post" th:object="${account}">
+				<div class="card">
+					<div class="card-header">
+						<h2>Add new User</h2>
+					</div>
+					<div class="card-body">
+						<div class="form-group mb-3">
+							<label for="username">Username:</label>
+							<input type="text" class="form-control" th:field="*{username}"
+								aria-describedby="categoryHID">
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="name">Password:</label>
+							<input type="text" class="form-control" th:field="*{password}" id="password"
+								aria-describedby="nameHID"> <small id="nameHID" class="form-text text-muted">Name is
+								required</small>
+						</div>
+					</div>
+					<div class="card-footer text-muted">
+						<a class="btn btn-secondary" th:href="@{/admin/accounts/add}">Reset</a>
+						<button class="btn btn-primary">
+							<i class="fas fa-save"></i> <span>Save</span>
+						</button>
+						<a th:href="@{/admin/accounts/accounts-manage}" class="btn btn-success">List
+							User</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+</body>
+
+</html>

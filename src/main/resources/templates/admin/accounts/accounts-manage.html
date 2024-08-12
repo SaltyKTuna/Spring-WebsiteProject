@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+
+</head>
+
+<body>
+
+	<h2>Accounts management</h2>
+	<section class="mt-4" layout:fragment="content">
+		<h3 th:if="${message != null}" class="alert alert-primary"
+			role="alert">
+			<i th:text="${message}"></i>
+		</h3>
+
+
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Username</th>
+					<th scope="col">Password</th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="account, iStat : ${accountsPage.content}">
+					<td th:text="${account.username}"></td>
+					<td th:text="${account.password}"></td>
+					<td><a
+						th:href="@{'/admin/accounts/edit/' + ${account.username}}"
+						class="btn btn-outline-warning btn-sm">Sửa</a> <a
+						th:href="@{'/admin/accounts/delete/' + ${account.username}}"
+						class="btn btn-outline-danger btn-sm">Xóa</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+		<div class="row mt-2 mb-2">
+			<a class="btn btn-outline-primary" th:href="@{/admin/accounts/add}">Add
+				new User</a>
+		</div>
+		<br>
+		<div>
+			<nav aria-label="Page navigation"
+				th:if="${accountsPage.totalPages > 0}">
+				<ul class="pagination justify-content-center">
+					<li th:classappend="${accountsPage.first} ? 'disabled'"><a
+						th:href="@{/admin/accounts/accounts-manage(size=${accountsPage.size}, page=1)}"
+						class="page-link">First</a></li>
+					<li
+						th:each="pageNumber : ${#numbers.sequence(1, accountsPage.totalPages)}"
+						th:classappend="${accountsPage.number + 1 == pageNumber} ? 'active'">
+						<a
+						th:href="@{/admin/accounts/accounts-manage(size=${accountsPage.size}, page=${pageNumber})}"
+						class="page-link" th:text="${pageNumber}"></a>
+					</li>
+					<li th:classappend="${accountsPage.last} ? 'disabled'"><a
+						th:href="@{/admin/accounts/accounts-manage(size=${accountsPage.size}, page=${accountsPage.totalPages})}"
+						class="page-link">Last</a></li>
+				</ul>
+			</nav>
+
+
+
+
+		</div>
+	</section>
+
+
+</body>
+
+</html>

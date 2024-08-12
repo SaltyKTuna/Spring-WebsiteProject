@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+
+</head>
+
+<body>
+
+	<section class="row" layout:fragment="content">
+		<div class="col-6 offset-3 mt-4">
+			<form th:action="@{/admin/categories/saveOrUpdate}" method="post"
+				th:object="${category}">
+				<div class="card">
+					<div class="card-header">
+						<h2>Add new Category</h2>
+					</div>
+					<div class="card-body">
+						<div class="form-group mb-3">
+							<label for="categoryID">Category ID:</label> <input type="hidden"
+								th:field="*{isEdit}"> <input type="text"
+								class="form-control" th:field="*{categoryID}" readonly
+								aria-describedby="categoryHID">
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="name">Category Name:</label> <input type="text"
+								class="form-control" th:field="*{name}" id="name"
+								aria-describedby="nameHID"> <small id="nameHID"
+								class="form-text text-muted">Name is required</small>
+						</div>
+					</div>
+					<div class="card-footer text-muted">
+						<a class="btn btn-secondary" th:href="@{/admin/categories/add}">Reset</a>
+						<button class="btn btn-primary">
+							<i class="fas fa-save"></i> <span th:if="${category.isEdit}">Update</span>
+							<span th:unless="${category.isEdit}">Save</span>
+						</button>
+						<a th:href="@{/admin/categories/list}" class="btn btn-success">List
+							Categories</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+</body>
+
+</html>
