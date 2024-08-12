@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{site/dashboardLayout.html}">
+
+<head>
+<title>Product List</title>
+</head>
+
+<body>
+	<section class="mt-4" layout:fragment="content">
+		<h1>Product List</h1>
+		<div class="container">
+			<h3>Select Category</h3>
+			<form action="/site/home" method="get">
+				<select class="form-control" id="categoryID" name="categoryId"
+					onchange="this.form.submit()">
+					<option value="">All Categories</option>
+					<option th:each="category : ${categories}"
+						th:value="${category.categoryID}" th:text="${category.name}"
+						th:selected="${category.categoryID == selectedCategory?.categoryID}"></option>
+				</select>
+			</form>
+
+			<div class="row mt-5">
+				<div th:each="product : ${products}" class="col-md-4 mb-4">
+					<form action="/site/addToCart" method="post" class="card">
+						<div class="card-body">
+							<img th:src="${product.image}" class="card-img-top"
+								alt="Product Image" width="200px" height="450px" />
+							<h3 th:text="${product.name}" class="card-title">Product
+								Name</h3>
+							<p th:text="${product.description}" class="card-text">Product
+								Description</p>
+							<p>
+								Price: $<span th:text="${product.unitPrice}">0.00</span>
+							</p>
+							<input type="hidden" name="productID" th:value="${product.productID}" />
+							<input type="hidden" name="productName" th:value="${product.name}" />
+							<input type="hidden" name="unitPrice" th:value="${product.unitPrice}" />
+							<button type="submit" class="btn btn-primary">Add to
+								Cart</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!-- Pagination -->
+		<div class="pagination">
+			<a th:if="${pageNumber > 1}"
+				th:href="@{/products(page=${pageNumber - 1})}"
+				class="btn btn-secondary">&laquo; Previous</a> <span>Page <span
+				th:text="${pageNumber}">1</span> of <span th:text="${totalPages}">1</span></span>
+			<a th:if="${pageNumber < totalPages}"
+				th:href="@{/products(page=${pageNumber + 1})}"
+				class="btn btn-secondary">Next &raquo;</a>
+		</div>
+	</section>
+
+</body>
+
+</html>

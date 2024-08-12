@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+
+</head>
+
+<body>
+
+	<section class="row" layout:fragment="content">
+		<h3 th:if="${errors != null}" class="alert alert-primary" role="alert">
+			<i th:text="${errors}"></i>
+		</h3>
+		<div class="col-6 offset-3 mt-4">
+			<form th:action="@{/admin/customers/saveOrUpdate}" method="post" th:object="${customer}">
+				<div class="card">
+					<div class="card-header">
+						<h2>Add new Category</h2>
+					</div>
+					<div class="card-body">
+						<div class="form-group mb-3">
+							<label for="customerID">Customer ID:</label> <input type="hidden" th:field="*{isEdit}">
+							<input type="text" class="form-control" th:field="*{customerID}" readonly
+								aria-describedby="customer">
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="name">Customer Name:</label> <input type="text" class="form-control"
+								th:field="*{name}" id="name" aria-describedby="nameHID"> <small id="nameHID"
+								class="form-text text-muted">Name is required</small>
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="name"> Password:</label> <input type="text" class="form-control"
+								th:field="*{password}" id="password" aria-describedby="passwordHID"> <small
+								id="passwordHID" class="form-text text-muted">Password is required</small>
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="name">Email:</label> <input type="email" class="form-control"
+								th:field="*{email}" id="email" aria-describedby="emailHID"> <small id="emailHID"
+								class="form-text text-muted">Email is required</small>
+						</div>
+
+						<div class="form-group mb-3">
+							<label for="name">Phone Numbers:</label> <input type="text" class="form-control"
+								th:field="*{phone}" id="phone" aria-describedby="phoneHID"> <small id="phoneHID"
+								class="form-text text-muted">Phone numbers is required</small>
+						</div>
+					</div>
+					<div class="card-footer text-muted">
+						<a class="btn btn-secondary" th:href="@{/admin/customers/add}">Reset</a>
+						<button class="btn btn-primary">
+							<i class="fas fa-save"></i> <span th:if="${customer.isEdit}">Update</span>
+							<span th:unless="${customer.isEdit}">Save</span>
+						</button>
+						<a th:href="@{/admin/customers/list}" class="btn btn-success">List
+							Customers</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+
+</body>
+
+</html>

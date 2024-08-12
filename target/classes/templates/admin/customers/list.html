@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/dashboardLayout.html}">
+
+<head>
+
+</head>
+
+<body>
+
+	<h2>Customer list</h2>
+	<section class="mt-4" layout:fragment="content">
+		<h3 th:if="${message != null}" class="alert alert-primary" role="alert">
+			<i th:text="${message}"></i>
+		</h3>
+		<div class="row mt-2 mb-2">
+			<div class="col d-flex justify-content-between align-items-center">
+				<form th:action="@{/admin/customers/search}" class="d-flex align-items-center">
+					<div class="form-group me-2">
+						<label for="name" class="me-2">Name:</label> <input type="text" name="name" id="name"
+							class="form-control">
+					</div>
+					<button class="btn btn-primary mt-4">Search</button>
+				</form>
+				<a class="btn btn-outline-primary" th:href="@{/admin/customers/add}">Add new Customer</a>
+			</div>
+		</div>
+
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Customer ID</th>
+					<th scope="col">Customer name</th>
+					<th scope="col">Customer password</th>
+					<th scope="col">Customer email</th>
+					<th scope="col">Customer phone</th>
+					<th scope="col">Customer registered Date</th>
+					<th scope="col">Customer status</th>
+
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="customer, iStat : ${customerPage.content}">
+					<td th:text="${customer.customerID}"></td>
+					<td th:text="${customer.name}"></td>
+					<td th:text="${customer.password}"></td>
+					<td th:text="${customer.email}"></td>
+					<td th:text="${customer.phone}"></td>
+					<td th:text="${#dates.format(customer.registeredDate, 'dd/MM/yyyy')}"></td>
+					<td th:text="${customer.status}"></td>
+
+					<td><a th:href="@{'/admin/customers/edit/' + ${customer.customerID}}"
+							class="btn btn-outline-warning btn-sm">Sửa</a> <a
+							th:href="@{'/admin/customers/delete/' + ${customer.customerID}}"
+							class="btn btn-outline-danger btn-sm">Xóa</a></td>
+				</tr>
+
+			</tbody>
+		</table>
+		<br>
+		<div>
+			<nav aria-label="Page navigation" th:if="${customerPage.totalPages > 0}">
+				<ul class="pagination justify-content-center">
+					<li th:class="${customerPage.first} ? 'page-item disabled' : 'page-item'">
+						<a th:href="@{/admin/customers/search(name=${name}, size=${customerPage.size}, page=1)}"
+							class="page-link">First</a>
+					</li>
+
+					<li th:each="pageNumber : ${pageNumbers}"
+						th:class="${customerPage.number + 1 == pageNumber} ? 'page-item active' : 'page-item'">
+						<a th:href="@{/admin/customers/search(name=${name}, size=${customerPage.size}, page=${pageNumber})}"
+							class="page-link" th:text="${pageNumber}"></a>
+					</li>
+
+					<li th:class="${customerPage.last} ? 'page-item disabled' : 'page-item'">
+						<a th:href="@{/admin/customers/search(name=${name}, size=${customerPage.size}, page=${customerPage.totalPages})}"
+							class="page-link">Last</a>
+					</li>
+				</ul>
+			</nav>
+
+		</div>
+	</section>
+
+
+</body>
+
+</html>
